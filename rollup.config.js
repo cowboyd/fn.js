@@ -1,5 +1,6 @@
 const babel = require("rollup-plugin-babel");
 const resolve = require("rollup-plugin-node-resolve");
+const filesize = require('rollup-plugin-filesize');
 const pkg = require("./package.json");
 const commonjs = require("rollup-plugin-commonjs");
 
@@ -39,6 +40,11 @@ module.exports = {
       plugins: ["external-helpers"]
     }),
     resolve(),
-    commonjs()
+    commonjs(),
+    filesize({
+      render(opt, size, gzip, bundle) {
+        return `Built: ${bundle.file} ( size: ${size}, gzip: ${gzip})`;
+      }
+    })
   ]
 };
