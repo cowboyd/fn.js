@@ -9,5 +9,5 @@ module.exports = function() {
       let built = config.output.map(options => bundle.write(options));
       return Promise.all(built);
     })
-    .then(() => console.log() )
+    .then(() => console.log())
 };
