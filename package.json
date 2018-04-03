@@ -11,7 +11,8 @@
   "private": false,
   "scripts": {
     "build": "rollup --config",
-    "pretest": "npm run build",
+    "lint": "eslint src",
+    "pretest": "npm run build && npm run lint",
     "test": "mocha tests/index.js",
     "prepare": "npm test"
   },
@@ -30,6 +31,7 @@
     "babel-preset-env": "1.6.1",
     "babel-register": "6.26.0",
     "chai": "^4.1.2",
+    "eslint": "4.19.1",
     "mocha": "^3.5.3",
     "rollup": "0.55.1",
     "rollup-plugin-babel": "3.0.3",

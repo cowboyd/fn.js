@@ -3,7 +3,7 @@ import { append } from '../semigroup';
 import { foldr } from '../foldable';
 import stable from '../stable';
 
-const { assign, keys, getPrototypeOf } = Object;
+const { getPrototypeOf } = Object;
 
 Functor.instance(Object, {
   map(fn, object) {
