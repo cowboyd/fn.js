@@ -25,7 +25,7 @@ export function thunk(fn) {
       evaluated = true;
       return result;
     }
-  };
+  }
   evaluate[Stable] = true;
   return evaluate;
 }
@@ -40,7 +40,7 @@ export function stableOne(fn) {
       cache.set(argument, fn(argument));
     }
     return cache.get(argument);
-  };
+  }
 
   stabilizedOne[Stable] = true;
 

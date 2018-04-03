@@ -16,7 +16,7 @@ Monoid.create = function create(Definition) {
       super();
       this.value = value;
     }
-  };
+  }
 
   Monoidal.reduce = (list) => reduce(Monoidal, map(i => new Monoidal(i), list)).value;
 
