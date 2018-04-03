@@ -1,8 +1,6 @@
 import 'jest';
 
-import { apply, map, append, foldr, foldl, filter, pure, reduce, flatMap, Monoid, Functor, type } from 'funcadelic';
-
-import stable from '../src/stable';
+import { apply, map, append, foldr, foldl, filter, pure, reduce, flatMap, Monoid, Functor, type, stable } from 'funcadelic';
 
 function promise(result) {
   return Promise.resolve(result);

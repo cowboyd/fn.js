@@ -27,3 +27,5 @@ import './foldable/object';
 export { Filterable, filter } from './filterable'
 import './filterable/object';
 import './filterable/array';
+
+export { default as stable } from './stable';
