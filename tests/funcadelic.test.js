@@ -1,11 +1,8 @@
-import { apply, map, append, foldr, foldl, filter, pure, reduce, flatMap, Monoid, Functor, type } from '../src/funcadelic';
+import 'jest';
+
+import { apply, map, append, foldr, foldl, filter, pure, reduce, flatMap, Monoid, Functor, type } from 'funcadelic';
+
 import stable from '../src/stable';
-
-import chai  from 'chai';
-import mocha from 'mocha';
-
-const { expect } = chai;
-const { describe, it } = mocha;
 
 function promise(result) {
   return Promise.resolve(result);
@@ -13,37 +10,37 @@ function promise(result) {
 
 describe('typeclasses', function() {
   it('exports type function', function() {
-    expect(type).to.be.instanceOf(Function);
+    expect(type).toBeInstanceOf(Function);
   });
 });
 
 describe('Functor', function() {
   it('maps objects', function() {
-    expect(map((i) => i * 2, {one: 1, two: 2})).to.deep.equal({one: 2, two: 4});
+    expect(map((i) => i * 2, {one: 1, two: 2})).toEqual({one: 2, two: 4});
   });
   it('maps objects, and maintains stability over its values.', function() {
     let objects =  map(i => ({}), {one: 1, two: 2});
-    expect(objects.one).to.equal(objects.one);
+    expect(objects.one).toBe(objects.one);
   });
   it('maps arrays', function() {
-    expect(map(i => i * 2, [1, 2, 3])).to.deep.equal([2,4,6]);
+    expect(map(i => i * 2, [1, 2, 3])).toEqual([2,4,6]);
   });
   it('maps promises', function() {
     return map(i => i * 2, promise(5)).then((result) => {
-      expect(result).to.equal(10);
+      expect(result).toBe(10);
     });
   });
   it('passes the key to the mapping function for objects', function() {
-    expect(map((_, name) => `hello ${name}`, {one: 1, two: 2})).to.deep.equal({one: 'hello one', two: 'hello two'});
+    expect(map((_, name) => `hello ${name}`, {one: 1, two: 2})).toEqual({one: 'hello one', two: 'hello two'});
   });
 });
 
 describe('Semigroup', function() {
   it('appends objects', function() {
-    expect(append({one: 1, two: 2}, {two: 'two', three: 3})).to.deep.equal({one: 1, two: 'two', three: 3});
+    expect(append({one: 1, two: 2}, {two: 'two', three: 3})).toEqual({one: 1, two: 'two', three: 3});
   });
   it('appends arrays', function() {
-    expect(append([1,2,3], [4,4,4])).to.deep.equal([1,2,3,4,4,4]);
+    expect(append([1,2,3], [4,4,4])).toEqual([1,2,3,4,4,4]);
   });
   it('maintains prototype', function() {
     class OneAndTwo {
@@ -52,7 +49,7 @@ describe('Semigroup', function() {
         this.two = 2;
       }
     }
-    expect(append(new OneAndTwo(), { two: 'two', three: 3 })).to.be.instanceof(OneAndTwo);
+    expect(append(new OneAndTwo(), { two: 'two', three: 3 })).toBeInstanceOf(OneAndTwo);
   });
   it('stabilizes getters on appended object', () => {
     let result = append({ two: 2, three: 3 }, {
@@ -60,7 +57,7 @@ describe('Semigroup', function() {
         return new Number(this.two + this.three);
       }
     });
-    expect(result.sum).to.equal(result.sum);
+    expect(result.sum).toBe(result.sum);
   });
   it('stabilizes getters on initial object', () => {
     let result = append({
@@ -69,7 +66,7 @@ describe('Semigroup', function() {
       }
     }, { two: 2, three: 3 });
 
-    expect(result.sum).to.equal(result.sum);
+    expect(result.sum).toBe(result.sum);
   });
   it('includes symbols', () => {
     let symbol = Symbol();
@@ -78,11 +75,11 @@ describe('Semigroup', function() {
     };
     let result = append(obj, {});
 
-    expect(obj[symbol]).to.equal(true);
-    expect(Object.getOwnPropertySymbols(obj)).to.deep.equal([symbol]);
+    expect(obj[symbol]).toBe(true);
+    expect(Object.getOwnPropertySymbols(obj)).toEqual([symbol]);
 
-    expect(Object.getOwnPropertySymbols(result)).to.deep.equal([symbol]);
-    expect(result[symbol]).to.equal(true);
+    expect(Object.getOwnPropertySymbols(result)).toEqual([symbol]);
+    expect(result[symbol]).toBe(true);
   });
   it('caches getters per instance', () => {
     let numbers = append({ data: [1, 2, 3] }, {
@@ -90,21 +87,21 @@ describe('Semigroup', function() {
         return this.data.map(n => `${n}`.toUpperCase());
       }
     });
-    expect(numbers.upperCaseStrings).to.deep.equal(['1', '2', '3']);
-    expect(numbers.upperCaseStrings).to.equal(numbers.upperCaseStrings);
+    expect(numbers.upperCaseStrings).toEqual(['1', '2', '3']);
+    expect(numbers.upperCaseStrings).toBe(numbers.upperCaseStrings);
 
     let letters = append(numbers, { data: [ 'a', 'b', 'c']});
-    expect(letters.upperCaseStrings).to.deep.equal(['A', 'B', 'C']);
-    expect(letters.upperCaseStrings).to.equal(letters.upperCaseStrings);
+    expect(letters.upperCaseStrings).toEqual(['A', 'B', 'C']);
+    expect(letters.upperCaseStrings).toBe(letters.upperCaseStrings);
   });
 });
 
 describe('Monoid', function () {
   it('reduces arrays', function() {
-    expect(reduce(Array, [[1,2,3], [4,5,6]])).to.deep.equal([1,2,3,4,5,6]);
+    expect(reduce(Array, [[1,2,3], [4,5,6]])).toEqual([1,2,3,4,5,6]);
   });
   it('reduces objects', function() {
-    expect(reduce(Object, [{first: 'Charles'}, {last: 'Lowell'}])).to.deep.equal({first: 'Charles', last: 'Lowell'});
+    expect(reduce(Object, [{first: 'Charles'}, {last: 'Lowell'}])).toEqual({first: 'Charles', last: 'Lowell'});
   });
 
   it('Allows you to define one-off monoids for convenience', function() {
@@ -114,38 +111,38 @@ describe('Monoid', function () {
         return a + b;
       }
     });
-    expect(Sum.reduce([1,2,3,4])).to.equal(10);
+    expect(Sum.reduce([1,2,3,4])).toBe(10);
   });
 });
 
 describe('Foldable', function() {
   it('folds arrays', function() {
-    expect(foldr((sum, i) => sum + i, 0, [1,2,3,4])).to.equal(10);
-    expect(foldl((sum, i) => sum + i, 0, [1,2,3,4])).to.equal(10);
+    expect(foldr((sum, i) => sum + i, 0, [1,2,3,4])).toBe(10);
+    expect(foldl((sum, i) => sum + i, 0, [1,2,3,4])).toBe(10);
   });
   it('folds objects', function() {
     expect(foldl((reverse, entry) => append(reverse, {[entry.value]: entry.key}), {}, {
       one: 'won',
       two: 'two'
-    })).to.deep.equal({won: 'one', two: 'two'});
+    })).toEqual({won: 'one', two: 'two'});
     expect(foldr((reverse, { key, value }) => append(reverse, {[value]: key}), {}, {
       one: 'won',
       two: 'two'
-    })).to.deep.equal({won: 'one', two: 'two'});
+    })).toEqual({won: 'one', two: 'two'});
   });
 });
 
 describe('Filterable', function() {
   it('filters arrays', function() {
-    expect(filter(x => x > 5, [10,3,10, 5])).to.deep.equal([10,10]);
+    expect(filter(x => x > 5, [10,3,10, 5])).toEqual([10,10]);
   });
   it('filters objects', function() {
     expect(filter(({key}) => key !== 'nope', {yes: 1, yep: 2, nope: 3, yup: 4}))
-      .to.deep.equal({yes: 1, yep: 2, yup: 4});
+      .toEqual({yes: 1, yep: 2, yup: 4});
   });
   it('preserves prototype', function() {
     class MyClass {}
-    expect(filter(memo => memo, new MyClass())).to.be.instanceOf(MyClass);
+    expect(filter(memo => memo, new MyClass())).toBeInstanceOf(MyClass);
   });
 });
 
@@ -154,30 +151,30 @@ describe('Applicative', function() {
     let greeting = (say, to, isExcited) => `${say}, ${to}${isExcited ? '!!' : ''}`;
 
     return apply(Promise, greeting, [promise('Hello'), promise('World'), promise(true)])
-      .then(result => expect(result).to.equal('Hello, World!!'));
+      .then(result => expect(result).toBe('Hello, World!!'));
   });
   it('can invoke pure statically', function() {
     return pure(Promise, "now I'm in a promise").then(msg => {
-      expect(msg).to.equal("now I'm in a promise");
+      expect(msg).toBe("now I'm in a promise");
     });
   });
 });
 
 describe('Monad', function() {
   it('flatMaps arrays', function() {
-    expect(flatMap(x => [x, -x], [1,2,3])).to.deep.equal([1,-1, 2, -2, 3, -3]);
+    expect(flatMap(x => [x, -x], [1,2,3])).toEqual([1,-1, 2, -2, 3, -3]);
   });
   it('flatMaps promises', function() {
     return flatMap(str => Promise.resolve(`${str} World!`), pure(Promise, "Hello"))
-      .then(result => expect(result).to.equal("Hello World!"));
+      .then(result => expect(result).toBe("Hello World!"));
   });
 });
 
 
 describe('A Typeclass', function () {
   it('has an associated symbol', function() {
-    expect(Functor.symbol).not.to.be.undefined;
-    expect(Object.getOwnPropertySymbols(Object.prototype)).to.include(Functor.symbol);
+    expect(Functor.symbol).toBeDefined();
+    expect(Object.getOwnPropertySymbols(Object.prototype)).toContain(Functor.symbol);
   });
 });
 
@@ -185,7 +182,7 @@ describe('stable function', () => {
   describe('thunk', () => {
     it('returns stabilized function when attempting to stabilize a thunk', () => {
       let stabilized = stable(() => {});
-      expect(stable(stabilized)).to.equal(stabilized);
+      expect(stable(stabilized)).toBe(stabilized);
     });
   });
   describe('stableOne', () => {
@@ -194,13 +191,13 @@ describe('stable function', () => {
       let two = {};
       let dateMaker = instance => new Date();
       let stableDateMaker = stable(dateMaker);
-      expect(stableDateMaker(one)).to.equal(stableDateMaker(one)); 
-      expect(stableDateMaker(two)).to.equal(stableDateMaker(two));
-      expect(stableDateMaker(one)).not.to.equal(stableDateMaker(two));
+      expect(stableDateMaker(one)).toBe(stableDateMaker(one)); 
+      expect(stableDateMaker(two)).toBe(stableDateMaker(two));
+      expect(stableDateMaker(one)).not.toBe(stableDateMaker(two));
     });
     it('returns stabilized function when attempting to stabilize a function with one argument', () => {
       let stabilized = stable(arg => arg);
-      expect(stable(stabilized)).to.equal(stabilized);
+      expect(stable(stabilized)).toBe(stabilized);
     });
   });
 });
