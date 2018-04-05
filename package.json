@@ -11,6 +11,7 @@
   "private": false,
   "scripts": {
     "build": "rollup --config",
+    "bench:append": "node ./scripts/bench append",
     "lint": "eslint src",
     "pretest": "npm run build && npm run lint",
     "test": "jest",
@@ -31,9 +32,12 @@
     "@babel/preset-env": "^7.0.0-beta.44",
     "babel-core": "^7.0.0-0",
     "babel-jest": "22.4.3",
+    "benchmark": "2.1.4",
+    "cli-table2": "0.2.0",
     "eslint": "4.19.1",
     "eslint-plugin-prefer-let": "1.0.1",
     "jest": "22.4.3",
+    "ora": "2.0.0",
     "regenerator-runtime": "0.11.1",
     "rollup": "0.57.1",
     "rollup-plugin-babel": "4.0.0-beta.3",
@@ -45,7 +49,7 @@
       "js",
       "json"
     ],
-    "globalSetup": "./build.js",
+    "globalSetup": "./scripts/build.js",
     "modulePaths": [
       "<rootDir>/src",
       "<rootDir>/node_modules"

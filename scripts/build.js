@@ -1,5 +1,5 @@
 const rollup = require("rollup");
-const config = require("./rollup.config");
+const config = require("../rollup.config");
 
 module.exports = function() {
   console.log("\n");
