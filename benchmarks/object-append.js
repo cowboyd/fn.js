@@ -1,4 +1,5 @@
 const Benchmark = require("benchmark");
+
 const { append } = require("../dist/funcadelic.cjs");
 
 module.exports = new Benchmark.Suite()

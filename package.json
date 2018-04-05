@@ -11,7 +11,7 @@
   "private": false,
   "scripts": {
     "build": "rollup --config",
-    "bench:append": "node ./scripts/bench append",
+    "bench": "node ./scripts/bench",
     "lint": "eslint src",
     "pretest": "npm run build && npm run lint",
     "test": "jest",
@@ -34,6 +34,7 @@
     "babel-jest": "22.4.3",
     "benchmark": "2.1.4",
     "cli-table2": "0.2.0",
+    "colors": "1.2.1",
     "eslint": "4.19.1",
     "eslint-plugin-prefer-let": "1.0.1",
     "jest": "22.4.3",
