@@ -10,13 +10,18 @@ function showResults(name, benchmarkResults) {
   info(`Results for ${name}`);
 
   let table = new Table({
-    head: ["NAME", "OPS/SEC", "RELATIVE MARGIN OF ERROR", "SAMPLE SIZE"]
+    head: ["NAME", "OPS/SEC", "RELATIVE", "RELATIVE MARGIN OF ERROR", "SAMPLE SIZE"]
   });
 
+  let baseline = benchmarkResults[0].target.hz;
+
   benchmarkResults.forEach(result => {
+    let value = result.target.hz;
+    let relative = (baseline / value).toFixed(0);
     table.push([
       result.target.name,
       result.target.hz.toLocaleString("en-US", { maximumFractionDigits: 0 }),
+      baseline === value ? '...' : colors.red(`${relative}x slower`),
       `± ${result.target.stats.rme.toFixed(2)}%`,
       result.target.stats.sample.length
     ]);
