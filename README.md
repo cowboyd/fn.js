@@ -356,7 +356,7 @@ might take 2 hours, two weeks, or two years.
 
 Ok.
 
-The basic `Functor` method `map` let's you transform values, but not
+The basic `Functor` method `map` lets you transform values, but not
 the enclosing context. In many ways that's the power of
 mapping. You're freed from thinking of the context because it remains
 constant. If you map an Array of 10 elements the result will also have
@@ -368,7 +368,7 @@ structure of the Array, or change the timing of the Promise. To unlock
 this power, you need `Monad`.
 
 Unlike `map`, the `flatMap` method of the `Monad` type class
-let's you actually _modify_ the context. So you can do things like
+lets you actually _modify_ the context. So you can do things like
 generate an Array of a different length than the original, or generate
 a Promise that resolves at a different time than the original.
 
