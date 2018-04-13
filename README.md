@@ -133,7 +133,7 @@ with writing your reduce, you can just use a monoidal reduction where
 those operations are implicit:
 
 ``` javascript
-reduce(Object, [one, two, three])
+reduce(Object, [name, occupation, height])
 //=> {name: 'Charles', occupation: 'Developer', height: {unit: 'cm', amount: 200}}
 ```
 
@@ -142,7 +142,7 @@ Of course, you may have recognized this as something akin to using
 with an empty object:
 
 ``` javascript
-Object.assign({}, one, two, three);
+Object.assign({}, name, occupation, height);
 ```
 
 The only difference is that it's not treating it as a unique,
