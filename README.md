@@ -489,6 +489,11 @@ you find yourself coming up against problems and wondering which to
 use and this documentation doesn't help. Shoot me a line and we can
 talk it over about how to improve it. When in doubt, `foldl`.
 
+## Compatibility
+
+Funcadelic uses `Function.name` to determine the name of the constructor when creating typeclasses. 
+Unfortunately, IE11 does not support retriving the name of a function. You may use [Function.name polyfill](https://github.com/JamesMGreene/Function.name) to make this feature available in IE11. 
+
 ## Development
 
 ```
