@@ -24,7 +24,6 @@
     "dist"
   ],
   "dependencies": {
-    "extend-shallow": "^3.0.2",
     "lodash.curry": "4.1.1",
     "object.getownpropertydescriptors": "2.0.3"
   },

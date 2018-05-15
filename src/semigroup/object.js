@@ -2,9 +2,8 @@ import { Semigroup } from '../semigroup';
 import { foldl } from '../foldable';
 import propertiesOf from 'object.getownpropertydescriptors';
 import stable from '../stable';
-import assign from 'extend-shallow';
 
-const { getPrototypeOf, getOwnPropertySymbols, keys } = Object;
+const { getPrototypeOf } = Object;
 
 Semigroup.instance(Object, {
   append(o1, o2) {
@@ -12,6 +11,27 @@ Semigroup.instance(Object, {
     return Object.create(getPrototypeOf(o1), stableize(properties));
   }
 });
+
+/**
+ * Analogue of Object.assign(). Copies properties from one or more source objects to
+ * a target object. Existing keys on the target object will be overwritten. 
+ * Modified to support copying Symbols.
+ */
+function assign(target) {
+  let totalArgs = arguments.length,
+      source, i, totalKeys, keys, key, j;
+
+  for (i = 1; i < totalArgs; i++) {
+    source = arguments[i];
+    keys = Object.keys(source).concat(Object.getOwnPropertySymbols(source));
+    totalKeys = keys.length;
+    for (j = 0; j < totalKeys; j++) {
+      key = keys[j];
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
 
 /**
  * Make all of the computed values in this set of property descriptors
@@ -26,18 +46,15 @@ function stableize(properties) {
   return foldl((descriptors, key) => {
     let descriptor = properties[key];
     if (!descriptor.get) {
-      return assign({}, descriptors, {
-        [key]: descriptor
-      });
+      descriptors[key] = descriptor;
     } else {
-      let cached = stable(instance => descriptor.get.call(instance));
-      return assign({}, descriptors, {
-        [key]: assign({}, descriptor, {
-          get() {
-            return cached(this);
-          }
-        })
-      });
+      let getter = descriptor.get;
+      let cached = stable(instance => getter.call(instance));
+      descriptor.get = function() {
+        return cached(this);
+      };
+      descriptors[key] = descriptor;
     }
-  }, {}, keys(properties).concat(getOwnPropertySymbols(properties)));
+    return descriptors;
+  }, {}, Object.keys(properties).concat(Object.getOwnPropertySymbols(properties)));
 }

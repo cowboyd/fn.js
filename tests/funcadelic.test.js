@@ -37,6 +37,13 @@ describe('Semigroup', function() {
   it('appends objects', function() {
     expect(append({one: 1, two: 2}, {two: 'two', three: 3})).toEqual({one: 1, two: 'two', three: 3});
   });
+  it('copies symbols', () => {
+    let a1 = Symbol();
+    let a2 = Symbol();
+    let result = append({ [a1]: true }, { [a2]: 42 });
+    expect(result[a1]).toBe(true);
+    expect(result[a2]).toBe(42);
+  });
   it('appends arrays', function() {
     expect(append([1,2,3], [4,4,4])).toEqual([1,2,3,4,4,4]);
   });
