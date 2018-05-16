@@ -20,19 +20,20 @@ Semigroup.instance(Object, {
  * We need this to prevent append from breaking in React Native 
  * @see https://github.com/facebook/react-native/blob/master/Libraries/polyfills/Object.es6.js#L12
  */
-function assign(target) {
-  let totalArgs = arguments.length,
-      source, i, totalKeys, keys, key, j;
+function assign(target, a, b) {
 
-  for (i = 1; i < totalArgs; i++) {
-    source = arguments[i];
-    keys = Object.keys(source).concat(Object.getOwnPropertySymbols(source));
-    totalKeys = keys.length;
-    for (j = 0; j < totalKeys; j++) {
-      key = keys[j];
+  function copy(source) {    
+    let keys = Object.keys(source).concat(Object.getOwnPropertySymbols(source));
+    let totalKeys = keys.length;
+    for (let j = 0; j < totalKeys; j++) {
+      let key = keys[j];
       target[key] = source[key];
     }
   }
+  
+  copy(a);
+  copy(b);
+
   return target;
 }
 
