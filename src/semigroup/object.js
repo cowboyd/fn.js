@@ -16,6 +16,9 @@ Semigroup.instance(Object, {
  * Analogue of Object.assign(). Copies properties from one or more source objects to
  * a target object. Existing keys on the target object will be overwritten. 
  * Modified to support copying Symbols.
+ * 
+ * We need this to prevent append from breaking in React Native 
+ * @see https://github.com/facebook/react-native/blob/master/Libraries/polyfills/Object.es6.js#L12
  */
 function assign(target) {
   let totalArgs = arguments.length,
