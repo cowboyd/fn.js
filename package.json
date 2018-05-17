@@ -38,6 +38,7 @@
     "eslint": "4.19.1",
     "eslint-plugin-prefer-let": "1.0.1",
     "jest": "22.4.3",
+    "object.getownpropertydescriptors": "2.0.3",
     "ora": "2.0.0",
     "regenerator-runtime": "0.11.1",
     "rollup": "0.57.1",
