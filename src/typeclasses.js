@@ -1,5 +1,4 @@
-import getOwnPropertyDescriptors from 'object.getownpropertydescriptors';
-const { keys } = Object;
+const { keys, getOwnPropertyDescriptors } = Object;
 
 export function type(Class) {
 

@@ -1,3 +1,8 @@
+import invariant from 'invariant';
+
+invariant(Object.getOwnPropertyDescriptors, `funcadelic.js requires Object.getOwnPropertyDescriptors. See https://github.com/cowboyd/funcadelic.js#compatibility`)
+invariant("name" in Function.prototype && "name" in (function x() {}), `funcadelic.js requires Function.name. See https://github.com/cowboyd/funcadelic.js#compatibility`);
+
 export { type } from "./typeclasses";
 
 export { Semigroup, append } from './semigroup';

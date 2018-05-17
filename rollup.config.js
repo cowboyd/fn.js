@@ -4,7 +4,7 @@ const pkg = require("./package.json");
 
 const globals = {
   "lodash.curry": "_.curry",
-  "object.getownpropertydescriptors": "Object.getOwnPropertyDescriptors"
+  "invariant": "invariant"
 };
 
 let external = Object.keys(globals);

@@ -24,8 +24,8 @@
     "dist"
   ],
   "dependencies": {
-    "lodash.curry": "4.1.1",
-    "object.getownpropertydescriptors": "2.0.3"
+    "invariant": "2.2.4",
+    "lodash.curry": "4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.44",

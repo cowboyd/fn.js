@@ -1,13 +1,12 @@
 import { Semigroup } from '../semigroup';
 import { foldl } from '../foldable';
-import propertiesOf from 'object.getownpropertydescriptors';
 import stable from '../stable';
 
-const { getPrototypeOf } = Object;
+const { getPrototypeOf, getOwnPropertyDescriptors, getOwnPropertySymbols } = Object;
 
 Semigroup.instance(Object, {
   append(o1, o2) {
-    let properties = assign({}, propertiesOf(o1), propertiesOf(o2));
+    let properties = assign({}, getOwnPropertyDescriptors(o1), getOwnPropertyDescriptors(o2));
     return Object.create(getPrototypeOf(o1), stableize(properties));
   }
 });
@@ -23,7 +22,7 @@ Semigroup.instance(Object, {
 function assign(target, a, b) {
 
   function copy(source) {    
-    let keys = Object.keys(source).concat(Object.getOwnPropertySymbols(source));
+    let keys = allKeys(source);
     let totalKeys = keys.length;
     for (let j = 0; j < totalKeys; j++) {
       let key = keys[j];
@@ -60,5 +59,9 @@ function stableize(properties) {
       descriptors[key] = descriptor;
     }
     return descriptors;
-  }, {}, Object.keys(properties).concat(Object.getOwnPropertySymbols(properties)));
+  }, {}, allKeys(properties));
+}
+
+function allKeys(o) {
+  return Object.keys(o).concat(getOwnPropertySymbols(o));
 }
