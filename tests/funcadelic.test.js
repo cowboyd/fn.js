@@ -1,5 +1,4 @@
 import 'jest';
-import 'object.getownpropertydescriptors/shim';
 
 import { apply, map, append, foldr, foldl, filter, pure, reduce, flatMap, Monoid, Functor, type, stable } from 'funcadelic';
 
