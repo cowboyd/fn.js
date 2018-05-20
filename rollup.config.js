@@ -3,8 +3,7 @@ const filesize = require("rollup-plugin-filesize");
 const pkg = require("./package.json");
 
 const globals = {
-  "invariant": "invariant",
-  "fk": "fk"
+  "invariant": "invariant"
 };
 
 let external = Object.keys(globals);
