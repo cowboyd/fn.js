@@ -24,7 +24,6 @@
     "dist"
   ],
   "dependencies": {
-    "fk": "1.0.0",
     "invariant": "2.2.4"
   },
   "devDependencies": {
