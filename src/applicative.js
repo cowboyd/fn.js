@@ -2,10 +2,10 @@ import { Functor } from './functor';
 import { foldl } from './foldable';
 import { type } from './typeclasses';
 
-function curry(f) {
+export function curry(f) {
   return function curried(...t) {
       if (t.length === 0) return curried;
-      if (t.length === f.length) return f(...t);
+      if (t.length >= f.length) return f(...t);
       return curried.bind(this, ...t);
   };
 }

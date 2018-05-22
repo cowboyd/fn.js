@@ -1,6 +1,7 @@
 import 'jest';
 
 import { apply, map, append, foldr, foldl, filter, pure, reduce, flatMap, Monoid, Functor, type, stable } from 'funcadelic';
+import {curry} from '../src/applicative';
 
 function promise(result) {
   return Promise.resolve(result);
@@ -204,5 +205,26 @@ describe('stable function', () => {
       let stabilized = stable(arg => arg);
       expect(stable(stabilized)).toBe(stabilized);
     });
+  });
+});
+
+describe('curry', () => {
+  let curried = curry(function (x, y) { return [].slice.call(arguments)});
+  let partial = curried(1);
+  
+  it('returns curried function when passing one argument', () => {
+    expect(partial).toBeInstanceOf(Function);
+  });
+  it('receives all arguments when partial function receives all expected arguments', () => {
+    expect(partial(2)).toEqual([1, 2]);
+  });
+  it('receives all arguments when partial function receives more than expected arguments', () => {
+    expect(partial(2, 3)).toEqual([1, 2, 3]);
+  });
+  it('returns value when all arguments passed', () => {
+    expect(curried(1, 2)).toEqual([1, 2]);
+  });
+  it('supports extra arguments', () => {
+    expect(curried(1, 2, 3)).toEqual([1, 2, 3]);
   });
 });
