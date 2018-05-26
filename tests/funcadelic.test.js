@@ -180,7 +180,7 @@ describe('Monad', function() {
 describe('A Typeclass', function () {
   it('has an associated symbol', function() {
     expect(Functor.symbol).toBeDefined();
-    expect(Object.getOwnPropertySymbols(Object.prototype)).toContain(Functor.symbol);
+    expect(Object.getOwnPropertyNames(Object.prototype)).toContain(Functor.symbol);
   });
 });
 
