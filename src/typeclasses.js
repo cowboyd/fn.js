@@ -16,18 +16,13 @@ let uniqueTag = 0;
 
 export function type(Class) {
 
-  let name = Class.name;
+  let name = hasBeenMangled ? uniqueTag++ : Class.name;
 
   if (!name) {
     throw new Error('invalid typeclass name: ' + name);
   }
 
   let symbolName = `@@funcadelic-${VERSION}/${name}`;
-
-  if (hasBeenMangled) {
-    symbolName = symbolName.concat(`/${uniqueTag++}`);
-  }
-
   let symbol = Symbol[symbolName] ? Symbol[symbolName] : Symbol[symbolName] = Symbol(symbolName);
 
   Class.for = function _for(value) {
