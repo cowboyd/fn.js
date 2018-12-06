@@ -4,11 +4,7 @@ const pkg = require("./package.json");
 
 let external = ["invariant"];
 
-let filesizePlugin = filesize({
-  render(opt, size, gzip, bundle) {
-    return `Built: ${bundle.file} ( size: ${size}, gzip: ${gzip})`;
-  }
-});
+let filesizePlugin = filesize();
 
 module.exports = [
   {
