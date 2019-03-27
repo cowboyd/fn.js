@@ -1,6 +1,11 @@
 import { type } from './typeclasses';
 
 export const Foldable = type(class Foldable {
+
+  static get name() {
+    return 'Foldable'
+  }
+
   foldr(fn, initial, foldable) {
     let { foldr } = this(foldable);
     return foldr(fn, initial, foldable);

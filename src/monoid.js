@@ -4,6 +4,10 @@ import { map } from './functor';
 import { type } from './typeclasses';
 
 export const Monoid = type(class Monoid extends Semigroup {
+  static get name() {
+    return 'Monoid'
+  }
+
   reduce(M, values) {
     let empty = this(M.prototype).empty();
     return foldl((reduction, value) => append(reduction, value), empty, values);

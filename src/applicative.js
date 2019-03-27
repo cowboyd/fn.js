@@ -11,6 +11,11 @@ export function curry(f) {
 }
 
 export const Applicative = type(class Applicative extends Functor {
+  
+  static get name() {
+    return 'Applicative'
+  }
+
   pure(Type, value) {
     return this(Type.prototype).pure(value);
   }
