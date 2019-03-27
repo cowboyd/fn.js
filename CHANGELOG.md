@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.5.7] - 2019-03-27 [v0.5.6...v0.5.7](https://github.com/cowboyd/funcadelic.js/compare/v0.5.6...v0.5.7)
+
+### Fixed
+
 - Add explicit name to typeclasses to prevent Uglify from removing the name https://github.com/cowboyd/funcadelic.js/pull/68
 
 ## [0.5.6] - 2019-02-16 [v0.5.5...v0.5.6](https://github.com/cowboyd/funcadelic.js/compare/v0.5.5...v0.5.6)

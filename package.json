@@ -1,6 +1,6 @@
 {
   "name": "funcadelic",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "Functional Fundamentals are Fun!",
   "main": "dist/funcadelic.cjs.js",
   "module": "dist/funcadelic.es.js",
